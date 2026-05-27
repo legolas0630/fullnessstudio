@@ -6,6 +6,7 @@ export const routing = defineRouting({
   defaultLocale: 'es',
   localeDetection: false,
   
+  // Registramos físicamente todas las rutas permitidas en la app
   pathnames: {
     '/': '/',
     '/experiencias': {
@@ -18,7 +19,11 @@ export const routing = defineRouting({
     '/memberships': '/memberships',
     '/sound-therapy': '/sound-therapy',
     '/cacao-ceremony': '/cacao-ceremony',
-    '/events': '/events'
+    '/events': '/events',
+    
+    // Solución al Type Error: Registramos las rutas de autenticación
+    '/auth/login': '/auth/login',
+    '/auth/register': '/auth/register'
   }
 });
 
