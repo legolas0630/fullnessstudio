@@ -180,7 +180,7 @@ export default function CalendarPage() {
             <p className="text-sm font-light text-white/60 mb-6 max-w-xl leading-relaxed">
               {t('ctaSubtitulo')}
             </p>
-            <Link href="/memberships" className="inline-flex items-center justify-center bg-[#E5C158] text-black px-8 py-3.5 text-xs uppercase tracking-widest font-semibold hover:bg-[#F3D782] active:scale-95 transition-all shadow-lg">
+            <Link href="/membresias" className="inline-flex items-center justify-center bg-[#E5C158] text-black px-8 py-3.5 text-xs uppercase tracking-widest font-semibold hover:bg-[#F3D782] active:scale-95 transition-all shadow-lg">
               {t('ctaBtn')}
             </Link>
           </div>
