@@ -16,40 +16,20 @@
       "static/chunks/main-app.js",
       "static/chunks/app/[locale]/not-found.js"
     ],
-    "/[locale]/membresias/page": [
+    "/[locale]/admin/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/membresias/page.js"
+      "static/chunks/app/[locale]/admin/page.js"
     ],
-    "/[locale]/experiencias/page": [
+    "/[locale]/auth/login/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/experiencias/page.js"
+      "static/chunks/app/[locale]/auth/login/page.js"
     ],
-    "/[locale]/experiencias/yoga/page": [
+    "/[locale]/auth/register/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/experiencias/yoga/page.js"
-    ],
-    "/[locale]/pilates/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/pilates/page.js"
-    ],
-    "/[locale]/sonoterapia/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/sonoterapia/page.js"
-    ],
-    "/[locale]/ceremonia-cacao/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/ceremonia-cacao/page.js"
-    ],
-    "/[locale]/senderismo/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/senderismo/page.js"
+      "static/chunks/app/[locale]/auth/register/page.js"
     ]
   }
 }

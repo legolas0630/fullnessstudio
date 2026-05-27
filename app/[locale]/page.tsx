@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Link } from '@/i18n/routing'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { useCurrency } from '@/context/CurrencyContext'
 import {
   Wind, Music, Leaf, Mountain, Circle, ChevronRight, ArrowRight, Star,
@@ -14,6 +14,7 @@ import {
 function Hero() {
   const [visible, setVisible] = useState(false)
   const t = useTranslations('Hero')
+  const activeLocale = useLocale()
 
   useEffect(() => { 
     const timer = setTimeout(() => setVisible(true), 100) 
@@ -572,7 +573,8 @@ function MembershipCTA() {
   )
 }
 
-// --- MAIN HOME LAYOUT UNIFICATION ------------------------------------------
+
+// --- MAIN HOME LAYOUT UNIFICATION ---
 export default function HomePage() {
   return (
     <div className="w-full bg-[#0F100F]">

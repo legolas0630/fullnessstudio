@@ -1,7 +1,6 @@
 {
-  "/[locale]/pilates/page": "app/[locale]/pilates/page.js",
-  "/[locale]/sonoterapia/page": "app/[locale]/sonoterapia/page.js",
-  "/[locale]/ceremonia-cacao/page": "app/[locale]/ceremonia-cacao/page.js",
-  "/[locale]/senderismo/page": "app/[locale]/senderismo/page.js",
-  "/[locale]/experiencias/yoga/page": "app/[locale]/experiencias/yoga/page.js"
+  "/[locale]/auth/login/page": "app/[locale]/auth/login/page.js",
+  "/[locale]/auth/register/page": "app/[locale]/auth/register/page.js",
+  "/[locale]/page": "app/[locale]/page.js",
+  "/[locale]/admin/page": "app/[locale]/admin/page.js"
 }

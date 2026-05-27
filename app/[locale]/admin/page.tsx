@@ -1,331 +1,469 @@
 'use client'
 
-import { useState } from 'react'
-import Link from 'next/link'
-import {
-  Users, Calendar, BookOpen, DollarSign, TrendingUp,
-  Settings, LogOut, Menu, X, Bell, Search,
-  ChevronRight, Plus, Eye, Edit, Trash2, Leaf
+import { useState, useEffect } from 'react'
+import { Link } from '@/i18n/routing'
+import { 
+  LayoutDashboard, Home, Compass, Calendar, CreditCard, Users, 
+  Settings, Save, Plus, Trash2, CheckCircle2, Sparkles, AlertCircle, 
+  Tag, MapPin, Phone, Mail, Instagram, Facebook, UserCheck, Search 
 } from 'lucide-react'
 
-// ─── MOCK DATA ─────────────────────────────────────────────────────────────
-const stats = [
-  { label: 'Total Members', value: '512', change: '+14 this month', icon: Users, color: 'text-[var(--sage)]', bg: 'bg-[var(--sage)]/10' },
-  { label: 'Classes This Week', value: '28', change: '3 fully booked', icon: Calendar, color: 'text-blue-600', bg: 'bg-blue-50' },
-  { label: 'Total Bookings', value: '1,847', change: '+127 this month', icon: BookOpen, color: 'text-purple-600', bg: 'bg-purple-50' },
-  { label: 'Monthly Revenue', value: '$18,450', change: '+8% vs last month', icon: DollarSign, color: 'text-emerald-600', bg: 'bg-emerald-50' },
-]
+type AdminTabs = 'home' | 'experiences' | 'calendar' | 'memberships' | 'users' | 'settings'
 
-const recentBookings = [
-  { user: 'Sarah Mitchell', class: 'Sunrise Vinyasa', date: 'Mon Jun 3, 7:00 AM', status: 'confirmed', paid: '$25' },
-  { user: 'James Chen', class: 'Sound Bath', date: 'Thu Jun 6, 8:00 PM', status: 'confirmed', paid: '$35' },
-  { user: 'Priya Kapoor', class: 'Pilates Core', date: 'Tue Jun 4, 6:00 PM', status: 'waitlist', paid: '—' },
-  { user: 'Leo Martinez', class: 'Cacao Ceremony', date: 'Sat Jun 7, 7:00 PM', status: 'confirmed', paid: '$65' },
-  { user: 'Aisha Brown', class: 'Yin Yoga', date: 'Wed Jun 5, 7:30 PM', status: 'cancelled', paid: 'Refunded' },
-]
+export default function AdminDashboardPage() {
+  const [activeTab, setActiveTab] = useState<AdminTabs>('home')
+  const [showNotification, setShowNotification] = useState(false)
+  const [notificationMsg, setNotificationMsg] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
 
-const recentMembers = [
-  { name: 'Taylor Woods', email: 'taylor@email.com', plan: 'Devotee', joined: 'Jun 1' },
-  { name: 'Mia Fontaine', email: 'mia@email.com', plan: 'Unlimited', joined: 'May 30' },
-  { name: 'Raj Patel', email: 'raj@email.com', plan: 'Explorer', joined: 'May 28' },
-  { name: 'Elena Russo', email: 'elena@email.com', plan: 'Founding', joined: 'May 27' },
-]
+  // 1. GLOBAL SETTINGS (Contacto, Dirección, Redes Sociales)
+  const [contactInfo, setContactInfo] = useState({
+    phone: '+52 473 123 4567',
+    email: 'hola@fullnessstudio.com',
+    address: 'Paseo de la Presa #85, Guanajuato, Gto, México',
+    instagram: 'https://instagram.com/fullnessstudio',
+    facebook: 'https://facebook.com/fullnessstudio'
+  })
 
-const navItems = [
-  { label: 'Dashboard', icon: TrendingUp, active: true },
-  { label: 'Members', icon: Users, active: false },
-  { label: 'Classes', icon: Calendar, active: false },
-  { label: 'Bookings', icon: BookOpen, active: false },
-  { label: 'Events', icon: Bell, active: false },
-  { label: 'Revenue', icon: DollarSign, active: false },
-  { label: 'Settings', icon: Settings, active: false },
-]
+  // 2. HOME PAGE (Todos los copys y secciones exactas)
+  const [homeData, setHomeData] = useState({
+    heroTitleEs: 'Encuentra tu Plenitud',
+    heroTitleEn: 'Find your Fullness',
+    heroSubEs: 'Un espacio sagrado para yoga, pilates, sanación sonora y comunidad con alma.',
+    heroSubEn: 'A sacred space for yoga, pilates, sound healing, and soul community.',
+    introTitleEs: 'Bienvenido a casa',
+    introTitleEn: 'Welcome home',
+    introDescEs: 'Donde la sabiduría antigua se encuentra con la vida moderna.',
+    introDescEn: 'Where ancient wisdom meets modern life.',
+    ctaEs: 'Comienza tu camino',
+    ctaEn: 'Start your journey'
+  })
 
-const statusColors: Record<string, string> = {
-  confirmed: 'bg-emerald-50 text-emerald-700',
-  waitlist: 'bg-amber-50 text-amber-700',
-  cancelled: 'bg-red-50 text-red-600',
-}
+  // 3. EXPERIENCES HUB (Edición total de cada una)
+  const [experiences, setExperiences] = useState([
+    { 
+      id: 'yoga', 
+      nameEs: 'Yoga Somático & Hatha', 
+      nameEn: 'Somatic Yoga & Hatha', 
+      taglineEs: 'Unión, presencia y fluidez consciente', 
+      taglineEn: 'Union, presence, and conscious flow',
+      featuresEs: 'Hatha Tradicional, Vinyasa Flow, Yoga Somático & Nidra',
+      featuresEn: 'Traditional Hatha, Vinyasa Flow, Somatic Yoga & Nidra',
+      active: true 
+    },
+    { 
+      id: 'pilates', 
+      nameEs: 'Pilates de Alta Precisión', 
+      nameEn: 'High-Precision Pilates', 
+      taglineEs: 'Fuerza interna, control y alineación', 
+      taglineEn: 'Inner strength, control, and alignment',
+      featuresEs: 'Control de Core, Alineación Postural, Flexibilidad Funcional',
+      featuresEn: 'Core Control, Postural Alignment, Functional Flexibility',
+      active: true 
+    },
+    { 
+      id: 'sonoterapia', 
+      nameEs: 'Sonoterapia & Cuencos Tibetanos', 
+      nameEn: 'Soundtherapy & Tibetan Bowls', 
+      taglineEs: 'Alineación vibracional y descanso celular', 
+      taglineEn: 'Vibrational alignment and cellular rest',
+      featuresEs: 'Cuencos de Cuarzo, Gongs Planetarios, Armonización',
+      featuresEn: 'Quartz Bowls, Planetary Gongs, Harmonization',
+      active: true 
+    },
+  ])
 
-// ─── COMPONENT ─────────────────────────────────────────────────────────────
-export default function AdminPage() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('Dashboard')
+  // 4. CALENDARIO DE EVENTOS / CLASES (Con Selector de Categoría Especializado)
+  const [events, setEvents] = useState([
+    { id: '1', date: '07 Jun 2026', type: 'cacao', titleEs: 'Luna Nueva — Nuevos comienzos', titleEn: 'New Moon — New beginnings', spots: 6, priceMXN: 650 },
+    { id: '2', date: '21 Jun 2026', type: 'hiking', titleEs: 'Solsticio de Verano — Gratitud', titleEn: 'Summer Solstice — Gratitude', spots: 10, priceMXN: 650 },
+    { id: '3', date: '15 Jul 2026', type: 'yoga', titleEs: 'Inmersión Hatha Profundo', titleEn: 'Deep Hatha Immersion', spots: 12, priceMXN: 400 },
+  ])
+
+  // 5. TARIFARIO DE MEMBRESÍAS (Nombre, Precios y Features modificables)
+  const [memberships, setMemberships] = useState([
+    { id: '1', name: 'Drop-In', priceMXN: 220, priceUSD: 12, featuresEs: 'Acceso a una sesión individual, Válido para cualquier estilo, Préstamo de mat incluido', featuresEn: 'Single session access, Valid for any style, Mat rental included' },
+    { id: '2', name: 'Explorer', priceMXN: 780, priceUSD: 45, featuresEs: '4 sesiones al mes, Acceso a videoteca digital, 10% desc en talleres', featuresEn: '4 sessions per month, Digital video library access, 10% off workshops' },
+    { id: '3', name: 'Devotee', priceMXN: 1450, priceUSD: 85, featuresEs: '12 sesiones al mes, Mat y utilería fija incluidos, 1 pase de invitado', featuresEn: '12 sessions per month, Fixed mat & props included, 1 guest pass' },
+  ])
+
+  // 6. MOCK SUPABASE USUARIOS REGISTRADOS
+  const [users, setUsers] = useState([
+    { id: 'usr_1', name: 'Carlos Cruces', email: 'carlos@mail.com', membership: 'Devotee', status: 'Activo', joined: '2026-05-12' },
+    { id: 'usr_2', name: 'Ana Sofía López', email: 'sofia.lopez@mail.com', membership: 'Explorer', status: 'Activo', joined: '2026-04-20' },
+    { id: 'usr_3', name: 'John Doe', email: 'john.doe@gmail.com', membership: 'Drop-In', status: 'Expirado', joined: '2026-01-15' },
+  ])
+
+  // Funciones CRUD del panel
+  const handleAddEvent = () => {
+    const newEvent = {
+      id: Date.now().toString(),
+      date: '12 Ago 2026',
+      type: 'yoga',
+      titleEs: 'Nuevo Taller Especial',
+      titleEn: 'New Special Workshop',
+      spots: 15,
+      priceMXN: 450,
+    }
+    setEvents([newEvent, ...events])
+  }
+
+  const handleSaveData = (sectionName: string) => {
+    setNotificationMsg(`¡Cambios en ${sectionName} guardados de forma segura!`)
+    setShowNotification(true)
+    setTimeout(() => setShowNotification(false), 3000)
+  }
+
+  const filteredUsers = users.filter(user => 
+    user.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  )
 
   return (
-    <div className="min-h-screen flex bg-stone-50 font-body">
-
-      {/* Sidebar */}
-      <aside className={`fixed lg:relative inset-y-0 left-0 z-50 w-64 bg-[var(--stone-dark)] text-white flex flex-col transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
-
-        {/* Logo */}
-        <div className="p-6 border-b border-white/10">
-          <Link href="/" className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center">
-              <Leaf size={14} strokeWidth={1.5} />
-            </div>
-            <div>
-              <p className="font-display text-lg leading-none">Sanctuary</p>
-              <p className="text-[9px] tracking-[0.25em] uppercase text-white/40 font-light">Admin Panel</p>
-            </div>
-          </Link>
+    <div className="bg-[#0F100F] min-h-screen text-white/80 font-light pt-28 pb-16 selection:bg-[#E5C158]/30">
+      
+      {/* ALERTA FLOTANTE PREMIUM */}
+      {showNotification && (
+        <div className="fixed top-28 right-6 z-50 flex items-center gap-3 bg-emerald-950/90 border border-emerald-500/30 text-emerald-400 px-6 py-4 rounded-xl shadow-2xl backdrop-blur-md animate-in fade-in slide-in-from-top-4">
+          <CheckCircle2 size={16} className="text-emerald-400" />
+          <span className="text-xs font-medium tracking-wide">{notificationMsg}</span>
         </div>
-
-        {/* Nav */}
-        <nav className="flex-1 p-4 space-y-1">
-          {navItems.map((item) => {
-            const Icon = item.icon
-            const isActive = activeSection === item.label
-            return (
-              <button
-                key={item.label}
-                onClick={() => { setActiveSection(item.label); setSidebarOpen(false) }}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-sm text-sm font-light transition-colors duration-150 ${
-                  isActive ? 'bg-[var(--sage)] text-white' : 'text-white/60 hover:text-white hover:bg-white/5'
-                }`}
-              >
-                <Icon size={16} strokeWidth={1.5} />
-                {item.label}
-              </button>
-            )
-          })}
-        </nav>
-
-        {/* Bottom */}
-        <div className="p-4 border-t border-white/10">
-          <div className="flex items-center gap-3 px-4 py-3 mb-1">
-            <div className="w-8 h-8 rounded-full bg-[var(--sage)]/30 flex items-center justify-center shrink-0">
-              <span className="font-display text-sm">A</span>
-            </div>
-            <div className="min-w-0">
-              <p className="text-sm text-white truncate">Admin User</p>
-              <p className="text-xs text-white/40 truncate font-light">admin@studio.com</p>
-            </div>
-          </div>
-          <Link href="/" className="flex items-center gap-3 px-4 py-2 text-white/40 hover:text-white text-sm font-light transition-colors">
-            <LogOut size={15} strokeWidth={1.5} /> Sign out
-          </Link>
-        </div>
-      </aside>
-
-      {/* Overlay */}
-      {sidebarOpen && (
-        <div className="fixed inset-0 z-40 bg-black/50 lg:hidden" onClick={() => setSidebarOpen(false)} />
       )}
 
-      {/* Main */}
-      <div className="flex-1 flex flex-col min-w-0">
-
-        {/* Topbar */}
-        <header className="bg-white border-b border-stone-200 px-6 py-4 flex items-center justify-between gap-4 sticky top-0 z-30">
-          <div className="flex items-center gap-4">
-            <button className="lg:hidden text-stone-500" onClick={() => setSidebarOpen(true)}>
-              <Menu size={22} strokeWidth={1.5} />
-            </button>
-            <h1 className="font-display text-2xl text-[var(--stone-dark)]">{activeSection}</h1>
-          </div>
-          <div className="flex items-center gap-3">
-            <div className="relative hidden sm:block">
-              <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" strokeWidth={1.5} />
-              <input
-                type="text"
-                placeholder="Search..."
-                className="pl-9 pr-4 py-2 text-sm border border-stone-200 bg-stone-50 focus:outline-none focus:border-[var(--sage)] w-48 font-light"
-              />
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        {/* --- NAVEGACIÓN LATERAL COMPLETA --- */}
+        <aside className="lg:col-span-3 bg-[#161816]/40 border border-white/5 rounded-2xl p-6 backdrop-blur-md w-full">
+          <div className="flex items-center gap-3 border-b border-white/5 pb-5 mb-5 text-left">
+            <div className="w-8 h-8 rounded-lg bg-[#E5C158]/10 border border-[#E5C158]/30 flex items-center justify-center text-[#E5C158]">
+              <LayoutDashboard size={15} />
             </div>
-            <button className="relative p-2 text-stone-400 hover:text-stone-700">
-              <Bell size={18} strokeWidth={1.5} />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[var(--terracotta)]" />
-            </button>
+            <div>
+              <h2 className="font-display text-base text-white font-light tracking-wide">Santuario Admin</h2>
+              <p className="text-[10px] text-white/40 tracking-wider uppercase font-medium">Consola de Control</p>
+            </div>
           </div>
-        </header>
 
-        {/* Content */}
-        <main className="flex-1 p-6 overflow-auto">
-
-          {/* Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
-            {stats.map((s) => {
-              const Icon = s.icon
+          <nav className="space-y-1">
+            {[
+              { id: 'home', label: 'Página de Inicio', icon: Home },
+              { id: 'experiences', label: 'Editar Experiencias', icon: Compass },
+              { id: 'calendar', label: 'Control de Eventos', icon: Calendar },
+              { id: 'memberships', label: 'Editar Membresías', icon: CreditCard },
+              { id: 'users', label: 'Alumnos Registrados', icon: Users },
+              { id: 'settings', label: 'Contacto & Redes', icon: Settings },
+            ].map((tab) => {
+              const TabIcon = tab.icon
+              const isActive = activeTab === tab.id
               return (
-                <div key={s.label} className="bg-white border border-stone-200 p-6">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className={`p-2.5 rounded-sm ${s.bg}`}>
-                      <Icon size={18} className={s.color} strokeWidth={1.5} />
-                    </div>
-                    <ChevronRight size={16} className="text-stone-300" />
-                  </div>
-                  <p className="font-display text-3xl text-[var(--stone-dark)] font-light mb-1">{s.value}</p>
-                  <p className="text-xs text-stone-500 font-light uppercase tracking-wide">{s.label}</p>
-                  <p className="text-xs text-emerald-600 font-light mt-1">{s.change}</p>
-                </div>
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id as AdminTabs)}
+                  className={`w-full flex items-center gap-3 px-4 py-3 text-xs tracking-wide rounded-xl transition-all ${
+                    isActive 
+                      ? 'bg-gradient-to-r from-[#E5C158]/10 to-transparent border border-[#E5C158]/20 text-[#E5C158] font-medium' 
+                      : 'hover:bg-white/5 text-white/50 border border-transparent'
+                  }`}
+                >
+                  <TabIcon size={14} />
+                  {tab.label}
+                </button>
               )
             })}
-          </div>
+          </nav>
+        </aside>
 
-          {/* Two columns */}
-          <div className="grid lg:grid-cols-3 gap-6">
-
-            {/* Recent bookings */}
-            <div className="lg:col-span-2 bg-white border border-stone-200">
-              <div className="flex items-center justify-between px-6 py-4 border-b border-stone-100">
-                <h2 className="font-display text-lg text-[var(--stone-dark)]">Recent Bookings</h2>
-                <button className="text-xs tracking-widest uppercase text-[var(--sage)] hover:underline font-light">View all</button>
+        {/* --- FORMULARIOS DE ACCIÓN DIRECTA --- */}
+        <main className="lg:col-span-9 bg-[#161816]/20 border border-white/5 rounded-2xl p-6 sm:p-10 backdrop-blur-md text-left w-full relative">
+          
+          {/* PANEL 1: INICIO COMPLETO */}
+          {activeTab === 'home' && (
+            <div className="space-y-6">
+              <div className="border-b border-white/5 pb-4">
+                <h3 className="font-display text-2xl text-white font-light flex items-center gap-2"><Sparkles size={16} className="text-[#E5C158]" /> Control de Inicio</h3>
+                <p className="text-xs text-white/40 font-light">Actualiza cada sección visible de la página principal.</p>
               </div>
-              <div className="overflow-x-auto">
-                <table className="w-full">
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-[10px] uppercase tracking-wider text-[#E5C158] mb-2">Título Hero (ES)</label>
+                  <input type="text" value={homeData.heroTitleEs} onChange={(e) => setHomeData({...homeData, heroTitleEs: e.target.value})} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs text-white font-light" />
+                </div>
+                <div>
+                  <label className="block text-[10px] uppercase tracking-wider text-white/40 mb-2">Título Hero (EN)</label>
+                  <input type="text" value={homeData.heroTitleEn} onChange={(e) => setHomeData({...homeData, heroTitleEn: e.target.value})} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs text-white font-light" />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-[10px] uppercase tracking-wider text-[#E5C158] mb-2">Subtítulo Hero (ES)</label>
+                  <textarea rows={2} value={homeData.heroSubEs} onChange={(e) => setHomeData({...homeData, heroSubEs: e.target.value})} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-xs text-white font-light" />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-[10px] uppercase tracking-wider text-white/40 mb-2">Subtítulo Hero (EN)</label>
+                  <textarea rows={2} value={homeData.heroSubEn} onChange={(e) => setHomeData({...homeData, heroSubEn: e.target.value})} className="w-full bg-black/40 border border-white/10 rounded-xl p-4 text-xs text-white font-light" />
+                </div>
+                <div className="border-t border-white/5 md:col-span-2 pt-4 mt-2">
+                  <h4 className="text-xs font-semibold text-white tracking-wider mb-4 uppercase">Sección de Filosofía / Introducción</h4>
+                </div>
+                <div>
+                  <label className="block text-[10px] uppercase tracking-wider text-[#E5C158] mb-2">Encabezado Filosofía (ES)</label>
+                  <input type="text" value={homeData.introTitleEs} onChange={(e) => setHomeData({...homeData, introTitleEs: e.target.value})} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs text-white font-light" />
+                </div>
+                <div>
+                  <label className="block text-[10px] uppercase tracking-wider text-white/40 mb-2">Encabezado Filosofía (EN)</label>
+                  <input type="text" value={homeData.introTitleEn} onChange={(e) => setHomeData({...homeData, introTitleEn: e.target.value})} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs text-white font-light" />
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-white/5 flex justify-end">
+                <button onClick={() => handleSaveData('Inicio')} className="flex items-center gap-2 bg-gradient-to-r from-[#E5C158] to-[#F3D782] text-black px-6 py-2.5 text-xs uppercase tracking-widest font-semibold rounded-md shadow-md">
+                  <Save size={13} /> Guardar Cambios Home
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* PANEL 2: EDITAR EXPERIENCIAS INDIVIDUALES */}
+          {activeTab === 'experiences' && (
+            <div className="space-y-6">
+              <div className="border-b border-white/5 pb-4">
+                <h3 className="font-display text-2xl text-white font-light flex items-center gap-2"><Sparkles size={16} className="text-[#E5C158]" /> Editor de Experiencias</h3>
+                <p className="text-xs text-white/40 font-light">Modifica los detalles, eslóganes y micro-características de cada disciplina.</p>
+              </div>
+
+              <div className="space-y-6">
+                {experiences.map((exp, idx) => (
+                  <div key={exp.id} className="p-6 bg-black/20 border border-white/5 rounded-2xl space-y-4">
+                    <div className="flex justify-between items-center border-b border-white/5 pb-3">
+                      <span className="text-xs font-semibold uppercase tracking-widest text-[#E5C158]">{exp.id} Pillar</span>
+                      <button 
+                        onClick={() => {
+                          const upd = [...experiences]; upd[idx].active = !upd[idx].active; setExperiences(upd)
+                        }}
+                        className={`text-[10px] px-2.5 py-1 rounded border ${exp.active ? 'text-emerald-400 border-emerald-500/20 bg-emerald-500/5' : 'text-white/30 border-white/10'}`}
+                      >
+                        {exp.active ? 'Visible en Web' : 'Oculto'}
+                      </button>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-[9px] uppercase tracking-wider text-white/50 mb-1">Nombre (ES)</label>
+                        <input type="text" value={exp.nameEs} onChange={(e) => { const upd = [...experiences]; upd[idx].nameEs = e.target.value; setExperiences(upd) }} className="w-full bg-[#0F100F] border border-white/5 rounded-lg px-3 py-2 text-xs text-white font-light" />
+                      </div>
+                      <div>
+                        <label className="block text-[9px] uppercase tracking-wider text-white/50 mb-1">Nombre (EN)</label>
+                        <input type="text" value={exp.nameEn} onChange={(e) => { const upd = [...experiences]; upd[idx].nameEn = e.target.value; setExperiences(upd) }} className="w-full bg-[#0F100F] border border-white/5 rounded-lg px-3 py-2 text-xs text-white font-light" />
+                      </div>
+                      <div className="md:col-span-2">
+                        <label className="block text-[9px] uppercase tracking-wider text-[#E5C158] mb-1">Especialidades (ES) <span className="text-[9px] text-white/30">(Separa con comas ,)</span></label>
+                        <input type="text" value={exp.featuresEs} onChange={(e) => { const upd = [...experiences]; upd[idx].featuresEs = e.target.value; setExperiences(upd) }} className="w-full bg-[#0F100F] border border-white/5 rounded-lg px-3 py-2 text-xs text-white font-light" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-6 border-t border-white/5 flex justify-end">
+                <button onClick={() => handleSaveData('Experiencias')} className="flex items-center gap-2 bg-gradient-to-r from-[#E5C158] to-[#F3D782] text-black px-6 py-2.5 text-xs uppercase tracking-widest font-semibold rounded-md shadow-md">
+                  <Save size={13} /> Guardar Disciplinas
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* PANEL 3: CONTROL DE EVENTOS Y CLASES */}
+          {activeTab === 'calendar' && (
+            <div className="space-y-6">
+              <div className="border-b border-white/5 pb-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+                <div>
+                  <h3 className="font-display text-2xl text-white font-light flex items-center gap-2"><Sparkles size={16} className="text-[#E5C158]" /> Consola de Eventos</h3>
+                  <p className="text-xs text-white/40 font-light mt-1">Crea o elimina actividades especificando su disciplina raíz.</p>
+                </div>
+                <button onClick={handleAddEvent} className="inline-flex items-center gap-2 px-4 py-2 border border-[#E5C158]/30 text-[#E5C158] text-xs font-semibold uppercase tracking-wider rounded-md hover:bg-[#E5C158] hover:text-black transition-all">
+                  <Plus size={13} /> Agregar Evento
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                {events.map((event, index) => (
+                  <div key={event.id} className="grid grid-cols-1 md:grid-cols-12 gap-4 p-5 bg-black/30 border border-white/5 rounded-xl items-center">
+                    <div className="md:col-span-2">
+                      <label className="block text-[9px] uppercase tracking-wider text-white/30 mb-1">Categoría</label>
+                      <select 
+                        value={event.type}
+                        onChange={(e) => { const updated = [...events]; updated[index].type = e.target.value; setEvents(updated) }}
+                        className="w-full bg-[#0F100F] border border-white/5 rounded-lg px-2 py-2 text-xs text-white/80 focus:outline-none"
+                      >
+                        <option value="yoga">Yoga</option>
+                        <option value="hiking">Senderismo</option>
+                        <option value="sonoterapia">Sonoterapia</option>
+                        <option value="cacao">Ceremonia Cacao</option>
+                      </select>
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-[9px] uppercase tracking-wider text-white/30 mb-1">Fecha</label>
+                      <input type="text" value={event.date} onChange={(e) => { const updated = [...events]; updated[index].date = e.target.value; setEvents(updated) }} className="w-full bg-[#0F100F] border border-white/5 rounded-lg px-3 py-2 text-xs text-white font-mono" />
+                    </div>
+                    <div className="md:col-span-4">
+                      <label className="block text-[9px] uppercase tracking-wider text-[#E5C158] mb-1">Nombre Evento (ES)</label>
+                      <input type="text" value={event.titleEs} onChange={(e) => { const updated = [...events]; updated[index].titleEs = e.target.value; setEvents(updated) }} className="w-full bg-[#0F100F] border border-white/5 rounded-lg px-3 py-2 text-xs text-white font-light" />
+                    </div>
+                    <div className="md:col-span-1">
+                      <label className="block text-[9px] uppercase tracking-wider text-white/30 mb-1">Cupos</label>
+                      <input type="number" value={event.spots} onChange={(e) => { const updated = [...events]; updated[index].spots = parseInt(e.target.value); setEvents(updated) }} className="w-full bg-[#0F100F] border border-white/5 rounded-lg px-3 py-2 text-xs text-white font-light" />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-[9px] uppercase tracking-wider text-[#E5C158] mb-1">Precio MXN</label>
+                      <input type="number" value={event.priceMXN} onChange={(e) => { const updated = [...events]; updated[index].priceMXN = parseInt(e.target.value); setEvents(updated) }} className="w-full bg-[#0F100F] border border-white/5 rounded-lg px-3 py-2 text-xs text-white font-light" />
+                    </div>
+                    <div className="md:col-span-1 flex justify-end pt-2 md:pt-0">
+                      <button onClick={() => setEvents(events.filter(e => e.id !== event.id))} className="w-8 h-8 rounded-lg bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 hover:bg-rose-500 hover:text-white transition-all"><Trash2 size={13} /></button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-6 border-t border-white/5 flex justify-end">
+                <button onClick={() => handleSaveData('Calendario')} className="flex items-center gap-2 bg-gradient-to-r from-[#E5C158] to-[#F3D782] text-black px-6 py-2.5 text-xs uppercase tracking-widest font-semibold rounded-md shadow-md">
+                  <Save size={13} /> Guardar Agenda
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* PANEL 4: EDITAR MEMBRESÍAS COMPLETO */}
+          {activeTab === 'memberships' && (
+            <div className="space-y-6">
+              <div className="border-b border-white/5 pb-4">
+                <h3 className="font-display text-2xl text-white font-light flex items-center gap-2"><Sparkles size={16} className="text-[#E5C158]" /> Estructura de Membresías</h3>
+                <p className="text-xs text-white/40 font-light">Modifica nombres comerciales, precios y características de la suite corporativa.</p>
+              </div>
+
+              <div className="space-y-6">
+                {memberships.map((plan, index) => (
+                  <div key={plan.id} className="p-6 bg-black/30 border border-white/5 rounded-xl space-y-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                      <div>
+                        <label className="block text-[9px] uppercase tracking-wider text-[#E5C158] mb-1">Nombre Membresía</label>
+                        <input type="text" value={plan.name} onChange={(e) => { const updated = [...memberships]; updated[index].name = e.target.value; setMemberships(updated) }} className="w-full bg-[#0F100F] border border-white/5 rounded-lg px-3 py-2 text-xs text-white font-semibold" />
+                      </div>
+                      <div>
+                        <label className="block text-[9px] uppercase tracking-wider text-white/40 mb-1">Costo MXN</label>
+                        <input type="number" value={plan.priceMXN} onChange={(e) => { const updated = [...memberships]; updated[index].priceMXN = parseInt(e.target.value); setMemberships(updated) }} className="w-full bg-[#0F100F] border border-white/5 rounded-lg px-3 py-2 text-xs text-white font-mono" />
+                      </div>
+                      <div>
+                        <label className="block text-[9px] uppercase tracking-wider text-white/40 mb-1">Costo USD</label>
+                        <input type="number" value={plan.priceUSD} onChange={(e) => { const updated = [...memberships]; updated[index].priceUSD = parseInt(e.target.value); setMemberships(updated) }} className="w-full bg-[#0F100F] border border-white/5 rounded-lg px-3 py-2 text-xs text-white font-mono" />
+                      </div>
+                      <div className="md:col-span-3">
+                        <label className="block text-[9px] uppercase tracking-wider text-[#E5C158] mb-1">Beneficios Incluidos (ES) <span className="text-[9px] text-white/30">(Separa con comas ,)</span></label>
+                        <textarea rows={2} value={plan.featuresEs} onChange={(e) => { const updated = [...memberships]; updated[index].featuresEs = e.target.value; setMemberships(updated) }} className="w-full bg-[#0F100F] border border-white/5 rounded-lg p-3 text-xs text-white font-light leading-relaxed" />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-6 border-t border-white/5 flex justify-end">
+                <button onClick={() => handleSaveData('Membresías')} className="flex items-center gap-2 bg-gradient-to-r from-[#E5C158] to-[#F3D782] text-black px-6 py-2.5 text-xs uppercase tracking-widest font-semibold rounded-md shadow-md">
+                  <Save size={13} /> Guardar Planes
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* PANEL 5: ALUMNOS REGISTRADOS (CONEXIÓN READY SUPABASE) */}
+          {activeTab === 'users' && (
+            <div className="space-y-6">
+              <div className="border-b border-white/5 pb-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
+                <div>
+                  <h3 className="font-display text-2xl text-white font-light flex items-center gap-2"><Users size={16} className="text-[#E5C158]" /> Alumnos de la Comunidad</h3>
+                  <p className="text-xs text-white/40 font-light mt-1">Monitorea los registros y estatus activos vinculados a Supabase DB.</p>
+                </div>
+                <div className="relative max-w-xs w-full">
+                  <Search size={14} className="absolute left-3 top-3 text-white/30" />
+                  <input 
+                    type="text" 
+                    placeholder="Buscar por nombre o correo..." 
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full bg-black/40 border border-white/10 rounded-xl pl-9 pr-4 py-2 text-xs text-white focus:outline-none focus:border-[#E5C158]/40 font-light"
+                  />
+                </div>
+              </div>
+
+              <div className="overflow-x-auto rounded-xl border border-white/5">
+                <table className="w-full text-left border-collapse bg-black/10">
                   <thead>
-                    <tr className="border-b border-stone-100">
-                      {['Member', 'Class', 'Date', 'Status', 'Paid'].map((h) => (
-                        <th key={h} className="text-left px-6 py-3 text-[10px] tracking-widest uppercase text-stone-400 font-light">{h}</th>
-                      ))}
+                    <tr className="border-b border-white/5 bg-white/5 text-[10px] tracking-wider uppercase text-[#E5C158] font-semibold">
+                      <th className="p-4">Alumno</th>
+                      <th className="p-4">Correo</th>
+                      <th className="p-4">Membresía</th>
+                      <th className="p-4">Registro</th>
+                      <th className="p-4 text-right">Estatus</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    {recentBookings.map((b, i) => (
-                      <tr key={i} className="border-b border-stone-50 hover:bg-stone-50 transition-colors">
-                        <td className="px-6 py-4 text-sm font-light text-[var(--stone-dark)]">{b.user}</td>
-                        <td className="px-6 py-4 text-sm font-light text-stone-500">{b.class}</td>
-                        <td className="px-6 py-4 text-xs font-light text-stone-400">{b.date}</td>
-                        <td className="px-6 py-4">
-                          <span className={`text-[10px] px-2.5 py-0.5 rounded-full font-light tracking-wide uppercase ${statusColors[b.status]}`}>
-                            {b.status}
+                  <tbody className="divide-y divide-white/5 text-xs font-light text-white/70">
+                    {filteredUsers.map((user) => (
+                      <tr key={user.id} className="hover:bg-white/5 transition-colors">
+                        <td className="p-4 font-normal text-white">{user.name}</td>
+                        <td className="p-4 font-mono text-white/50">{user.email}</td>
+                        <td className="p-4"><span className="px-2 py-0.5 bg-white/5 border border-white/5 rounded text-[11px] font-medium">{user.membership}</span></td>
+                        <td className="p-4 text-white/40 font-mono">{user.joined}</td>
+                        <td className="p-4 text-right">
+                          <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-medium border ${
+                            user.status === 'Activo' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-rose-500/10 text-rose-400 border-rose-500/20'
+                          }`}>
+                            <UserCheck size={10} /> {user.status}
                           </span>
                         </td>
-                        <td className="px-6 py-4 text-sm font-light text-stone-600">{b.paid}</td>
                       </tr>
                     ))}
                   </tbody>
                 </table>
               </div>
             </div>
+          )}
 
-            {/* New members + quick actions */}
-            <div className="space-y-4">
+          {/* PANEL 6: GLOBAL CONTACT SETTINGS */}
+          {activeTab === 'settings' && (
+            <div className="space-y-6">
+              <div className="border-b border-white/5 pb-4">
+                <h3 className="font-display text-2xl text-white font-light flex items-center gap-2"><Settings size={16} className="text-[#E5C158]" /> Información del Santuario</h3>
+                <p className="text-xs text-white/40 font-light">Modifica los canales de contacto públicos, teléfono y perfiles de redes sociales.</p>
+              </div>
 
-              {/* Quick actions */}
-              <div className="bg-white border border-stone-200 p-5">
-                <h2 className="font-display text-lg text-[var(--stone-dark)] mb-4">Quick Actions</h2>
-                <div className="grid grid-cols-2 gap-2">
-                  {[
-                    { label: 'Add Class', icon: Plus },
-                    { label: 'New Event', icon: Plus },
-                    { label: 'View Members', icon: Eye },
-                    { label: 'Edit Schedule', icon: Edit },
-                  ].map((a) => {
-                    const Icon = a.icon
-                    return (
-                      <button key={a.label} className="flex items-center gap-2 p-3 border border-stone-100 hover:border-[var(--sage)] hover:text-[var(--sage)] text-stone-500 transition-colors text-xs font-light">
-                        <Icon size={13} strokeWidth={1.5} />
-                        {a.label}
-                      </button>
-                    )
-                  })}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-[10px] uppercase tracking-wider text-white/50 mb-2 flex items-center gap-1.5"><Phone size={12} className="text-[#E5C158]" /> Teléfono de Recepción</label>
+                  <input type="text" value={contactInfo.phone} onChange={(e) => setContactInfo({...contactInfo, phone: e.target.value})} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs text-white font-mono" />
+                </div>
+                <div>
+                  <label className="block text-[10px] uppercase tracking-wider text-white/50 mb-2 flex items-center gap-1.5"><Mail size={12} className="text-[#E5C158]" /> Correo Electrónico Corporativo</label>
+                  <input type="email" value={contactInfo.email} onChange={(e) => setContactInfo({...contactInfo, email: e.target.value})} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs text-white font-mono" />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-[10px] uppercase tracking-wider text-white/50 mb-2 flex items-center gap-1.5"><MapPin size={12} className="text-[#E5C158]" /> Dirección Física del Estudio</label>
+                  <input type="text" value={contactInfo.address} onChange={(e) => setContactInfo({...contactInfo, address: e.target.value})} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs text-white font-light" />
+                </div>
+                <div>
+                  <label className="block text-[10px] uppercase tracking-wider text-white/50 mb-2 flex items-center gap-1.5"><Instagram size={12} className="text-[#E5C158]" /> Enlace de Instagram</label>
+                  <input type="text" value={contactInfo.instagram} onChange={(e) => setContactInfo({...contactInfo, instagram: e.target.value})} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs text-white font-light" />
+                </div>
+                <div>
+                  <label className="block text-[10px] uppercase tracking-wider text-white/50 mb-2 flex items-center gap-1.5"><Facebook size={12} className="text-[#E5C158]" /> Enlace de Facebook</label>
+                  <input type="text" value={contactInfo.facebook} onChange={(e) => setContactInfo({...contactInfo, facebook: e.target.value})} className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-xs text-white font-light" />
                 </div>
               </div>
 
-              {/* New members */}
-              <div className="bg-white border border-stone-200">
-                <div className="flex items-center justify-between px-5 py-4 border-b border-stone-100">
-                  <h2 className="font-display text-lg text-[var(--stone-dark)]">New Members</h2>
-                  <button className="text-xs tracking-widest uppercase text-[var(--sage)] hover:underline font-light">See all</button>
-                </div>
-                <div className="divide-y divide-stone-50">
-                  {recentMembers.map((m) => (
-                    <div key={m.email} className="flex items-center gap-3 px-5 py-3 hover:bg-stone-50 transition-colors">
-                      <div className="w-8 h-8 rounded-full bg-[var(--sage)]/10 flex items-center justify-center shrink-0">
-                        <span className="font-display text-sm text-[var(--sage)]">{m.name[0]}</span>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-light text-[var(--stone-dark)] truncate">{m.name}</p>
-                        <p className="text-xs text-stone-400 font-light truncate">{m.plan} · {m.joined}</p>
-                      </div>
-                      <button className="text-stone-300 hover:text-[var(--sage)] transition-colors">
-                        <ChevronRight size={14} />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Revenue mini chart placeholder */}
-              <div className="bg-[var(--sage-dark)] text-white p-5">
-                <h2 className="font-display text-lg mb-1">Revenue Trend</h2>
-                <p className="text-xs text-white/50 font-light mb-4">Last 6 months</p>
-                <div className="flex items-end gap-1.5 h-16">
-                  {[40, 65, 55, 80, 70, 90].map((h, i) => (
-                    <div key={i} className="flex-1 bg-[var(--sage-light)]/30 rounded-sm" style={{ height: `${h}%` }} />
-                  ))}
-                </div>
-                <div className="flex justify-between text-[10px] text-white/30 font-light mt-2">
-                  {['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'].map((m) => (
-                    <span key={m}>{m}</span>
-                  ))}
-                </div>
+              <div className="pt-6 border-t border-white/5 flex justify-end">
+                <button onClick={() => handleSaveData('Ajustes Globales')} className="flex items-center gap-2 bg-gradient-to-r from-[#E5C158] to-[#F3D782] text-black px-6 py-2.5 text-xs uppercase tracking-widest font-semibold rounded-md shadow-md">
+                  <Save size={13} /> Guardar Ajustes
+                </button>
               </div>
             </div>
-          </div>
+          )}
 
-          {/* Upcoming classes */}
-          <div className="mt-6 bg-white border border-stone-200">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-stone-100">
-              <h2 className="font-display text-lg text-[var(--stone-dark)]">Today's Classes</h2>
-              <Link href="/calendar" className="text-xs tracking-widest uppercase text-[var(--sage)] hover:underline font-light">Full calendar</Link>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-stone-100">
-                    {['Time', 'Class', 'Instructor', 'Booked / Max', 'Status', 'Actions'].map((h) => (
-                      <th key={h} className="text-left px-6 py-3 text-[10px] tracking-widest uppercase text-stone-400 font-light">{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    { time: '7:00 AM', name: 'Sunrise Vinyasa', instructor: 'Maya Chen', booked: 16, max: 18, status: 'live' },
-                    { time: '9:30 AM', name: 'Gentle Hatha', instructor: 'Priya Nair', booked: 12, max: 20, status: 'upcoming' },
-                    { time: '12:00 PM', name: 'Pilates Core', instructor: 'Elena Rossi', booked: 12, max: 12, status: 'full' },
-                    { time: '6:00 PM', name: 'Vinyasa Flow', instructor: 'Maya Chen', booked: 8, max: 18, status: 'upcoming' },
-                    { time: '8:00 PM', name: 'Sound Bath', instructor: 'Aria Stone', booked: 22, max: 25, status: 'upcoming' },
-                  ].map((cls, i) => (
-                    <tr key={i} className="border-b border-stone-50 hover:bg-stone-50 transition-colors">
-                      <td className="px-6 py-4 text-sm font-light text-stone-500">{cls.time}</td>
-                      <td className="px-6 py-4 text-sm font-light text-[var(--stone-dark)]">{cls.name}</td>
-                      <td className="px-6 py-4 text-sm font-light text-stone-500">{cls.instructor}</td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-2">
-                          <div className="flex-1 h-1.5 bg-stone-100 rounded-full max-w-[60px]">
-                            <div
-                              className="h-full bg-[var(--sage)] rounded-full"
-                              style={{ width: `${(cls.booked / cls.max) * 100}%` }}
-                            />
-                          </div>
-                          <span className="text-xs text-stone-500 font-light">{cls.booked}/{cls.max}</span>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span className={`text-[10px] px-2.5 py-0.5 rounded-full font-light tracking-wide uppercase ${
-                          cls.status === 'live' ? 'bg-emerald-50 text-emerald-700' :
-                          cls.status === 'full' ? 'bg-red-50 text-red-600' :
-                          'bg-stone-100 text-stone-500'
-                        }`}>
-                          {cls.status}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex gap-2">
-                          <button className="p-1.5 text-stone-300 hover:text-[var(--sage)] transition-colors"><Eye size={14} strokeWidth={1.5} /></button>
-                          <button className="p-1.5 text-stone-300 hover:text-blue-600 transition-colors"><Edit size={14} strokeWidth={1.5} /></button>
-                          <button className="p-1.5 text-stone-300 hover:text-red-500 transition-colors"><Trash2 size={14} strokeWidth={1.5} /></button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
         </main>
       </div>
     </div>
