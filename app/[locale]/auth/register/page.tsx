@@ -69,7 +69,7 @@ export default function RegisterPage() {
     setLoading(false)
   }
 
-  // --- VISTA 1: ÉXITO EN REGISTRO (CON CONFIRMACIÓN DE EMAIL MÍSTICA) ---
+  // --- VISTA: ÉXITO EN REGISTRO ---
   if (success) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0F100F] px-6 text-white/80 font-light relative overflow-hidden">
@@ -103,13 +103,12 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-[#0F100F] text-white/80 font-light selection:bg-[#E5C158]/30">
       
-      {/* --- BLOQUE IZQUIERDO: FORMULARIO DE REGISTRO PREMIUM --- */}
+      {/* --- BLOQUE IZQUIERDO: FORMULARIO --- */}
       <div className="flex items-center justify-center p-8 sm:p-12 relative overflow-hidden order-2 lg:order-1 border-t lg:border-t-0 lg:border-r border-white/5">
         <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#E5C158]/5 blur-[140px] rounded-full pointer-events-none" />
         
         <div className="w-full max-w-sm relative z-10">
           
-          {/* Logo Corporativo */}
           <Link href="/" className="flex items-center gap-3 mb-10 text-left">
             <div className="w-8 h-8 rounded-full border border-[#E5C158]/30 bg-[#E5C158]/5 flex items-center justify-center text-[#E5C158]">
               <Heart size={14} fill="#E5C158" className="opacity-80" />
@@ -130,7 +129,6 @@ export default function RegisterPage() {
             </Link>
           </p>
 
-          {/* Banner de errores */}
           {error && (
             <div className="mb-6 p-4 bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-light rounded-xl text-left flex items-start gap-2.5">
               <span className="shrink-0 mt-0.5">✦</span>
@@ -204,11 +202,12 @@ export default function RegisterPage() {
               />
             </div>
 
+            {/* Bloque Legal Corregido con el escape 'as any' para TypeScript */}
             <p className="text-[11px] text-white/30 font-light leading-relaxed pt-1">
               {activeLocale === 'en' ? (
-                <>By creating an account, you agree to our <Link href="/terms" className="text-[#E5C158] hover:underline">Terms of Service</Link> and <Link href="/privacy" className="text-[#E5C158] hover:underline">Privacy Policy</Link>.</>
+                <>By creating an account, you agree to our <Link href={"/terms" as any} className="text-[#E5C158] hover:underline">Terms of Service</Link> and <Link href={"/privacy" as any} className="text-[#E5C158] hover:underline">Privacy Policy</Link>.</>
               ) : (
-                <>Al crear una cuenta, aceptas nuestros <Link href="/terms" className="text-[#E5C158] hover:underline">Términos de servicio</Link> y <Link href="/privacy" className="text-[#E5C158] hover:underline">Política de privacidad</Link>.</>
+                <>Al crear una cuenta, aceptas nuestros <Link href={"/terms" as any} className="text-[#E5C158] hover:underline">Términos de servicio</Link> y <Link href={"/privacy" as any} className="text-[#E5C158] hover:underline">Política de privacidad</Link>.</>
               )}
             </p>
 
@@ -228,7 +227,6 @@ export default function RegisterPage() {
             </button>
           </form>
 
-          {/* OAUTH GOOGLE ACCESO */}
           <div className="mt-6 pt-6 border-t border-white/5">
             <button
               type="button"
@@ -254,11 +252,10 @@ export default function RegisterPage() {
         </div>
       </div>
 
-      {/* --- BLOQUE DERECHO: DISEÑO DE BENEFICIOS DE LA COMUNIDAD --- */}
+      {/* --- BLOQUE DERECHO: INTERFAZ MÍSTICA --- */}
       <div className="hidden lg:flex bg-[#121412] relative overflow-hidden order-1 lg:order-2 flex-col justify-between p-16">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-[#E5C158]/5 blur-[130px] rounded-full pointer-events-none" />
         
-        {/* Esferas decorativas sincrónicas */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div className="w-[500px] h-[500px] rounded-full border border-white/5 animate-[pulse_8s_ease-in-out_infinite]" />
         </div>
@@ -286,7 +283,6 @@ export default function RegisterPage() {
           </ul>
         </div>
 
-        {/* Cita de Cierre Zen */}
         <p className="font-display text-xs italic text-white/30 text-left relative z-10 tracking-wide">
           {activeLocale === 'en'
             ? '"You cannot do yoga. Yoga is your natural state." — Sharon Gannon'
