@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Link } from '@/i18n/routing'
 import { useRouter } from 'next/navigation'
-import { Sparkles, Eye, EyeOff, Heart } from 'lucide-react'
+import { Eye, EyeOff, Heart } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useLocale } from 'next-intl'
 
@@ -30,7 +30,7 @@ export default function LoginPage() {
       return
     }
 
-    router.push('/admin') // Redirige directamente al panel de control optimizado
+    router.push('/admin')
     router.refresh()
   }
 
@@ -39,15 +39,12 @@ export default function LoginPage() {
       
       {/* --- BLOQUE IZQUIERDO: DISEÑO MÍSTICO EDITORIAL --- */}
       <div className="hidden lg:flex bg-[#121412] relative overflow-hidden flex-col justify-between p-16 border-r border-white/5">
-        {/* Halos de luz de fondo */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#E5C158]/5 blur-[120px] rounded-full pointer-events-none" />
         
-        {/* Esfera geométrica Zen */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full border border-white/5 flex items-center justify-center animate-[spin_120s_linear_infinite]">
           <div className="w-64 h-64 rounded-full border border-[#E5C158]/10 border-dashed" />
         </div>
 
-        {/* Branding superior */}
         <Link href="/" className="flex items-center gap-3 relative z-10 text-left">
           <div className="w-8 h-8 rounded-full border border-[#E5C158]/30 bg-[#E5C158]/5 flex items-center justify-center text-[#E5C158]">
             <Heart size={14} fill="#E5C158" className="opacity-80" />
@@ -58,7 +55,6 @@ export default function LoginPage() {
           </div>
         </Link>
 
-        {/* Mensaje Inspiracional */}
         <div className="relative z-10 text-left">
           <p className="font-accent text-[#E5C158] text-2xl mb-2">
             {activeLocale === 'en' ? 'Welcome back' : 'Bienvenido de nuevo'}
@@ -73,7 +69,6 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Cita Zen */}
         <p className="font-display text-xs italic text-white/30 text-left relative z-10 tracking-wide">
           "The present moment is the only moment available to us." — Thich Nhat Hanh
         </p>
@@ -85,7 +80,6 @@ export default function LoginPage() {
         
         <div className="w-full max-w-sm relative z-10">
           
-          {/* Logo visible solo en móviles */}
           <Link href="/" className="inline-flex items-center gap-2 mb-10 lg:hidden">
             <span className="font-display text-2xl text-white tracking-wide">Fullness <em className="text-[#E5C158] font-serif not-italic">Studio</em></span>
           </Link>
@@ -100,7 +94,6 @@ export default function LoginPage() {
             </Link>
           </p>
 
-          {/* Caja de control de errores */}
           {error && (
             <div className="mb-6 p-4 bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-light rounded-xl text-left flex items-start gap-2.5">
               <span className="shrink-0 mt-0.5">✦</span>
@@ -128,7 +121,8 @@ export default function LoginPage() {
                 <label className="text-[10px] tracking-widest uppercase text-white/40 font-medium">
                   {activeLocale === 'en' ? 'Password' : 'Contraseña'}
                 </label>
-                <Link href="/auth/forgot-password" className="text-[11px] text-[#E5C158]/70 hover:text-[#E5C158] hover:underline transition-colors">
+                {/* Escape de tipo aplicado aquí para solucionar el build error */}
+                <Link href={"/auth/forgot-password" as any} className="text-[11px] text-[#E5C158]/70 hover:text-[#E5C158] hover:underline transition-colors">
                   {activeLocale === 'en' ? 'Forgot password?' : '¿Olvidaste tu contraseña?'}
                 </Link>
               </div>
@@ -167,7 +161,6 @@ export default function LoginPage() {
             </button>
           </form>
 
-          {/* OAUTH GOOGLE INTEGRACIÓN PREMIUM */}
           <div className="mt-8 pt-6 border-t border-white/5">
             <p className="text-[10px] tracking-widest uppercase text-white/30 text-center font-medium mb-4">
               {activeLocale === 'en' ? 'Or continue with' : 'O continúa con'}

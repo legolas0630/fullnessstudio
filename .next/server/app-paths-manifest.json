@@ -1,6 +1,6 @@
 {
-  "/[locale]/auth/login/page": "app/[locale]/auth/login/page.js",
-  "/[locale]/auth/register/page": "app/[locale]/auth/register/page.js",
-  "/[locale]/page": "app/[locale]/page.js",
-  "/[locale]/admin/page": "app/[locale]/admin/page.js"
+  "/_not-found/page": "app/_not-found/page.js",
+  "/[locale]/admin/page": "app/[locale]/admin/page.js",
+  "/[locale]/rates/route": "app/[locale]/rates/route.js",
+  "/[locale]/page": "app/[locale]/page.js"
 }
