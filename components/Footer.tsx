@@ -62,9 +62,9 @@ export default function Footer() {
           <ul className="space-y-3 text-xs tracking-wider uppercase font-light">
             <li><Link href="/experiencias" className="hover:text-[#E5C158] transition-colors">{t('c1_yoga')}</Link></li>
             <li><Link href="/pilates" className="hover:text-[#E5C158] transition-colors">{t('c1_pilates')}</Link></li>
-            <li><Link href="/sound-therapy" className="hover:text-[#E5C158] transition-colors">{t('c1_sonido')}</Link></li>
-            <li><Link href="/cacao-ceremony" className="hover:text-[#E5C158] transition-colors">{t('c1_cacao')}</Link></li>
-            <li><Link href="/hiking" className="hover:text-[#E5C158] transition-colors">{t('c1_senderos')}</Link></li>
+            <li><Link href="/sonoterapia" className="hover:text-[#E5C158] transition-colors">{t('c1_sonido')}</Link></li>
+            <li><Link href="/ceremonia-cacao" className="hover:text-[#E5C158] transition-colors">{t('c1_cacao')}</Link></li>
+            <li><Link href="/senderismo" className="hover:text-[#E5C158] transition-colors">{t('c1_senderos')}</Link></li>
           </ul>
         </div>
 
