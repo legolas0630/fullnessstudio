@@ -135,7 +135,7 @@ function Intro() {
 
 // --- ASYMMETRICAL OFFERINGS BENTO GRID --------------------------------------
 const offeringsData = [
-  { icon: Leaf, labelKey: 'yoga', descKey: 'yogaDesc', href: '/services', img: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80', span: 'lg:col-span-8', baseUsdPrice: 18 },
+  { icon: Leaf, labelKey: 'yoga', descKey: 'yogaDesc', href: '/experiencias', img: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80', span: 'lg:col-span-8', baseUsdPrice: 18 },
   { icon: Circle, labelKey: 'pilates', descKey: 'pilatesDesc', href: '/pilates', img: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&q=80', span: 'lg:col-span-4', baseUsdPrice: 22 },
   { icon: Music, labelKey: 'terapia', descKey: 'terapiaDesc', href: '/sound-therapy', img: 'https://images.unsplash.com/photo-1603233015219-c187b79dccd7?auto=format&fit=crop&w=800&q=80', span: 'lg:col-span-4', baseUsdPrice: 25 },
   { icon: Wind, labelKey: 'cacao', descKey: 'cacaoDesc', href: '/cacao-ceremony', img: 'https://images.unsplash.com/photo-1542856391-010fb87dcfed?auto=format&fit=crop&w=800&q=80', span: 'lg:col-span-4', baseUsdPrice: 35 },
@@ -257,7 +257,7 @@ function YogaSection() {
               ))}
             </ul>
             <div className="flex flex-wrap gap-4">
-              <Link href="/services" className="inline-flex items-center justify-center bg-[#E5C158] text-black px-8 py-3.5 text-xs uppercase tracking-widest font-semibold hover:bg-[#F3D782] active:scale-95 transition-all">{t('btnHorario')}</Link>
+              <Link href="/experiencias" className="inline-flex items-center justify-center bg-[#E5C158] text-black px-8 py-3.5 text-xs uppercase tracking-widest font-semibold hover:bg-[#F3D782] active:scale-95 transition-all">{t('btnHorario')}</Link>
               <Link href="/memberships" className="inline-flex items-center justify-center border border-white/20 text-white px-8 py-3.5 text-xs uppercase tracking-widest font-light hover:bg-white/5 active:scale-95 transition-all">{t('btnMembresias')}</Link>
             </div>
           </div>
