@@ -98,7 +98,8 @@ export default function Header() {
               {navLinks.map((link) =>
                 link.children ? (
                   <div key={link.label} className="relative" onMouseEnter={() => setOpenDropdown(link.id)} onMouseLeave={() => setOpenDropdown(null)}>
-                    <Link href={link.href} className={`text-xs tracking-widest uppercase font-light transition-colors duration-200 flex items-center gap-1.5 py-3 select-none active:text-[#E5C158] ${
+                    {/* Protegido con as any */}
+                    <Link href={link.href as any} className={`text-xs tracking-widest uppercase font-light transition-colors duration-200 flex items-center gap-1.5 py-3 select-none active:text-[#E5C158] ${
                       transparent ? 'text-white/80 hover:text-white' : 'text-white/70 hover:text-[#E5C158]'
                     }`}>
                       {link.label}
@@ -108,7 +109,8 @@ export default function Header() {
                       <div className="absolute top-full left-1/2 -translate-x-1/2 pt-1 w-56">
                         <div className="bg-[#121412]/95 border border-[#E5C158]/20 shadow-2xl rounded-lg overflow-hidden backdrop-blur-md animate-fadeIn">
                           {link.children.map((child) => (
-                            <Link key={child.href} href={child.href} className="block px-6 py-3.5 text-xs tracking-wider text-white/80 hover:text-[#E5C158] hover:bg-[#E5C158]/5 transition-all duration-150 border-b border-white/5 last:border-0 font-light uppercase active:bg-[#E5C158]/10">
+                            /* Protegido con as any */
+                            <Link key={child.href} href={child.href as any} className="block px-6 py-3.5 text-xs tracking-wider text-white/80 hover:text-[#E5C158] hover:bg-[#E5C158]/5 transition-all duration-150 border-b border-white/5 last:border-0 font-light uppercase active:bg-[#E5C158]/10">
                               {child.label}
                             </Link>
                           ))}
@@ -117,7 +119,8 @@ export default function Header() {
                     )}
                   </div>
                 ) : (
-                  <Link key={link.label} href={link.href} className={`text-xs tracking-widest uppercase font-light transition-colors duration-200 py-3 active:scale-95 transform ${
+                  /* Protegido con as any */
+                  <Link key={link.label} href={link.href as any} className={`text-xs tracking-widest uppercase font-light transition-colors duration-200 py-3 active:scale-95 transform ${
                     transparent ? 'text-white/80 hover:text-white' : 'text-white/70 hover:text-[#E5C158]'
                   } ${pathname === link.href ? 'text-[#E5C158] font-normal border-b border-[#E5C158]/40' : ''}`}>
                     {link.label}
@@ -167,8 +170,9 @@ export default function Header() {
                 link.children ? (
                   <div key={link.label} className="border-b border-white/5 pb-2 mb-2">
                     <div className="w-full flex items-center justify-between text-left">
+                      {/* Protegido con as any */}
                       <Link 
-                        href={link.href}
+                        href={link.href as any}
                         className="py-3 font-display text-xl text-white/90 active:text-[#E5C158] tracking-wide uppercase flex-1"
                       >
                         {link.label}
@@ -184,7 +188,8 @@ export default function Header() {
                     <div className={`transition-all duration-300 overflow-hidden ${mobileDropdownOpen ? 'max-h-64 opacity-100 mt-2' : 'max-h-0 opacity-0'}`}>
                       <div className="bg-black/30 border-l border-[#E5C158]/30 rounded-r-md ml-1 pl-4 flex flex-col gap-1.5">
                         {link.children.map((child) => (
-                          <Link key={child.href} href={child.href} className="block py-2.5 text-sm font-light text-white/70 active:text-[#E5C158] active:translate-x-1 transform transition-all uppercase tracking-widest">
+                          /* Protegido con as any */
+                          <Link key={child.href} href={child.href as any} className="block py-2.5 text-sm font-light text-white/70 active:text-[#E5C158] active:translate-x-1 transform transition-all uppercase tracking-widest">
                             {child.label}
                           </Link>
                         ))}
@@ -192,7 +197,8 @@ export default function Header() {
                     </div>
                   </div>
                 ) : (
-                  <Link key={link.label} href={link.href} className="block py-3.5 font-display text-xl text-white hover:text-[#E5C158] active:text-[#E5C158] active:translate-x-1 transform transition-all border-b border-white/5 uppercase tracking-wide">
+                  /* Protegido con as any */
+                  <Link key={link.label} href={link.href as any} className="block py-3.5 font-display text-xl text-white hover:text-[#E5C158] active:text-[#E5C158] active:translate-x-1 transform transition-all border-b border-white/5 uppercase tracking-wide">
                     {link.label}
                   </Link>
                 )
