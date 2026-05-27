@@ -139,7 +139,7 @@ const offeringsData = [
   { icon: Circle, labelKey: 'pilates', descKey: 'pilatesDesc', href: '/pilates', img: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&q=80', span: 'lg:col-span-4', baseUsdPrice: 22 },
   { icon: Music, labelKey: 'terapia', descKey: 'terapiaDesc', href: '/sonoterapia', img: 'https://images.unsplash.com/photo-1603233015219-c187b79dccd7?auto=format&fit=crop&w=800&q=80', span: 'lg:col-span-4', baseUsdPrice: 25 },
   { icon: Wind, labelKey: 'cacao', descKey: 'cacaoDesc', href: '/ceremonia-cacao', img: 'https://images.unsplash.com/photo-1542856391-010fb87dcfed?auto=format&fit=crop&w=800&q=80', span: 'lg:col-span-4', baseUsdPrice: 35 },
-  { icon: Mountain, labelKey: 'senderismo', descKey: 'senderismoDesc', href: '/hiking', img: 'https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=800&q=80', span: 'lg:col-span-4', baseUsdPrice: 25 },
+  { icon: Mountain, labelKey: 'senderismo', descKey: 'senderismoDesc', href: '/senderismo', img: 'https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=800&q=80', span: 'lg:col-span-4', baseUsdPrice: 25 },
 ]
 
 function Offerings() {
@@ -471,7 +471,7 @@ function HikingSection() {
               ))}
             </div>
 
-            <Link href="/hiking" className="inline-flex items-center justify-center bg-transparent border border-white/20 text-white px-8 py-3.5 text-xs uppercase tracking-widest font-medium hover:bg-white hover:text-black active:scale-95 transition-all">
+            <Link href="/senderismo" className="inline-flex items-center justify-center bg-transparent border border-white/20 text-white px-8 py-3.5 text-xs uppercase tracking-widest font-medium hover:bg-white hover:text-black active:scale-95 transition-all">
               {t('btn')}
             </Link>
           </div>
