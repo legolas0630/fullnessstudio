@@ -1,0 +1,272 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&family=Pinyon+Script&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Jost', sans-serif;
+  --font-accent: 'Pinyon Script', cursive;
+
+  /* Premium Obsidian & Gold Brand Design Tokens */
+  --obsidian: #0F100F;
+  --obsidian-light: #161816;
+  --gold-premium: #E5C158;
+  --gold-light: #F3D782;
+
+  /* Legacy layout handles retained to safely protect your inner descriptive page sections */
+  --cream: #f7f3ed;
+  --parchment: #ede8df;
+  --sage-light: #c2d2b8;
+  --sage: #587d4e;
+  --sage-dark: #364f30;
+  --stone: #78716c;
+  --stone-dark: #292524;
+  --terracotta: #b5622e;
+  --gold: #c9a96e;
+}
+
+/* Global Resets & Anti-Aliasing */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--obsidian);
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-body);
+  font-weight: 300;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography Foundations */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+/* Luxury Minimalist Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--obsidian);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(229, 193, 88, 0.25);
+  border-radius: 100px;
+  transition: background 0.3s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-premium);
+}
+
+/* Consolidated High-Contrast Selection Highlights */
+::selection {
+  background-color: rgba(229, 193, 88, 0.25) !important;
+  color: #ffffff !important;
+  text-shadow: 0 0 10px rgba(229, 193, 88, 0.3);
+}
+
+/* Core Brand Micro-Animations */
+.animate-breathe {
+  /* Added hardware acceleration rendering to keep page scrolling buttery smooth */
+  animation: breathe 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.15; }
+  50% { transform: translate(-50%, -50%) scale(1.05); opacity: 0.35; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(3deg); }
+}
+
+/* Page Mount Fade-In Component Transitions */
+.page-enter {
+  opacity: 0;
+  transform: translateY(15px);
+}
+.page-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Organic Analog Film Grain Texture Overlay */
+.grain::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.25;
+}
+
+/* Luxury Section Dividers */
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  color: var(--gold-premium);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.ornament::before,
+.ornament::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(229, 193, 88, 0.3), transparent);
+}
+
+/* Glassmorphism Surface Components */
+.glass {
+  background: rgba(18, 20, 18, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(229, 193, 88, 0.15);
+}
+
+/* Input Fields Layout Templates */
+.input-base {
+  width: 100%;
+  background: var(--obsidian-light);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 0.85rem 1.25rem;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.875rem;
+  color: #ffffff;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+.input-base:focus {
+  border-color: var(--gold-premium);
+  box-shadow: 0 0 0 3px rgba(229, 193, 88, 0.15);
+  background: #1a1d1a;
+}
+.input-base::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Optimized High-Contrast Button Systems */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, var(--gold-premium), var(--gold-light));
+  color: var(--obsidian);
+  padding: 0.875rem 2.25rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.8125rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(229, 193, 88, 0.15);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(229, 193, 88, 0.3);
+  filter: brightness(1.05);
+}
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: transparent;
+  color: var(--gold-premium);
+  padding: 0.875rem 2.25rem;
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: 0.8125rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border: 1px solid rgba(229, 193, 88, 0.4);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-outline:hover {
+  background: rgba(229, 193, 88, 0.08);
+  border-color: var(--gold-premium);
+  color: #ffffff;
+}
+.btn-outline:active {
+  transform: scale(0.98);
+}
+
+/* Layout Padding Metrics */
+.section-pad {
+  padding: 7rem 0;
+}
+
+@media (max-width: 768px) {
+  .section-pad {
+    padding: 4.5rem 0;
+  }
+}
+/* --- LUXURY PRELOADER ANIMATION SYSTEM --- */
+
+/* Core breathing rhythm (Simulates a deep 5-second breath cycle) */
+@keyframes meditative-breath {
+  0%, 100% {
+    transform: scale(0.96);
+    filter: drop-shadow(0 0 15px rgba(229, 193, 88, 0.2));
+  }
+  50% {
+    transform: scale(1.06);
+    filter: drop-shadow(0 0 35px rgba(243, 215, 130, 0.5));
+  }
+}
+
+/* Sound Wave / Aura Ripple Expansion */
+@keyframes aura-ripple {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+
+.animate-breath-core {
+  animation: meditative-breath 5s cubic-bezier(0.42, 0, 0.58, 1) infinite;
+}
+
+.animate-aura-wave {
+  animation: aura-ripple 5s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
