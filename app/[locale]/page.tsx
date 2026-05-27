@@ -137,7 +137,7 @@ function Intro() {
 const offeringsData = [
   { icon: Leaf, labelKey: 'yoga', descKey: 'yogaDesc', href: '/experiencias', img: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80', span: 'lg:col-span-8', baseUsdPrice: 18 },
   { icon: Circle, labelKey: 'pilates', descKey: 'pilatesDesc', href: '/pilates', img: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?auto=format&fit=crop&w=800&q=80', span: 'lg:col-span-4', baseUsdPrice: 22 },
-  { icon: Music, labelKey: 'terapia', descKey: 'terapiaDesc', href: '/sound-therapy', img: 'https://images.unsplash.com/photo-1603233015219-c187b79dccd7?auto=format&fit=crop&w=800&q=80', span: 'lg:col-span-4', baseUsdPrice: 25 },
+  { icon: Music, labelKey: 'terapia', descKey: 'terapiaDesc', href: '/sonoterapia', img: 'https://images.unsplash.com/photo-1603233015219-c187b79dccd7?auto=format&fit=crop&w=800&q=80', span: 'lg:col-span-4', baseUsdPrice: 25 },
   { icon: Wind, labelKey: 'cacao', descKey: 'cacaoDesc', href: '/cacao-ceremony', img: 'https://images.unsplash.com/photo-1542856391-010fb87dcfed?auto=format&fit=crop&w=800&q=80', span: 'lg:col-span-4', baseUsdPrice: 35 },
   { icon: Mountain, labelKey: 'senderismo', descKey: 'senderismoDesc', href: '/hiking', img: 'https://images.unsplash.com/photo-1501555088652-021faa106b9b?auto=format&fit=crop&w=800&q=80', span: 'lg:col-span-4', baseUsdPrice: 25 },
 ]
@@ -352,7 +352,7 @@ function SoundSection() {
               {t('tituloStart')}<br /><em className="italic text-[#E5C158] not-italic">{t('tituloEm')}</em>
             </h2>
             <p className="font-body font-light text-white/60 leading-relaxed text-base md:text-lg mb-8 max-w-xl">{t('descripcion')}</p>
-            <Link href="/sound-therapy" className="inline-flex items-center gap-4 group active:scale-98 transition-transform">
+            <Link href="/sonoterapia" className="inline-flex items-center gap-4 group active:scale-98 transition-transform">
               <div className="w-14 h-14 rounded-full border border-[#E5C158]/30 flex items-center justify-center bg-black/40 group-hover:border-[#E5C158] group-hover:shadow-[0_0_15px_rgba(229,193,88,0.2)] transition-all duration-300">
                 <Play size={18} className="text-[#E5C158] ml-1" fill="#E5C158" />
               </div>
