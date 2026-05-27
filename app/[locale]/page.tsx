@@ -529,7 +529,7 @@ function Schedule() {
         </div>
 
         <div className="text-center">
-          <Link href="/calendar" className="inline-flex items-center justify-center border border-white/10 text-white px-8 py-4 text-xs uppercase tracking-widest font-light hover:bg-white/5 active:scale-95 transition-all">
+          <Link href="/calendario" className="inline-flex items-center justify-center border border-white/10 text-white px-8 py-4 text-xs uppercase tracking-widest font-light hover:bg-white/5 active:scale-95 transition-all">
             {t('btn')}
           </Link>
         </div>
