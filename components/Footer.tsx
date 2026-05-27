@@ -72,9 +72,9 @@ export default function Footer() {
         <div className="lg:col-span-2 text-left md:pl-4">
           <p className="text-[10px] tracking-[0.25em] uppercase text-[#E5C158] font-medium mb-5">{t('col2')}</p>
           <ul className="space-y-3 text-xs tracking-wider uppercase font-light">
-            <li><Link href="/calendar" className="hover:text-[#E5C158] transition-colors">{t('c2_cal')}</Link></li>
-            <li><Link href="/events" className="hover:text-[#E5C158] transition-colors">{t('c2_ev')}</Link></li>
-            <li><Link href="/memberships" className="hover:text-[#E5C158] transition-colors">{t('c2_mem')}</Link></li>
+            <li><Link href="/calendario" className="hover:text-[#E5C158] transition-colors">{t('c2_cal')}</Link></li>
+            <li><Link href="/eventos" className="hover:text-[#E5C158] transition-colors">{t('c2_ev')}</Link></li>
+            <li><Link href="/membresias" className="hover:text-[#E5C158] transition-colors">{t('c2_mem')}</Link></li>
           </ul>
         </div>
 
