@@ -1,4 +1,4 @@
-// File: C:\Users\legol\yoga-studio\app\[locale]\rates\route.ts
+// File: C:\Users\legol\fullness-studio\app\[locale]\rates\route.ts
 import * as entry from '../../../../../app/[locale]/rates/route.js'
 import type { NextRequest } from 'next/server.js'
 

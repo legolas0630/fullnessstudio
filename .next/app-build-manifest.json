@@ -1,14 +1,14 @@
 {
   "pages": {
-    "/[locale]/experiencias/page": [
+    "/[locale]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/experiencias/page.js"
+      "static/chunks/app/[locale]/page.js"
     ],
     "/[locale]/layout": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/css-app_locale_globals_css.css",
+      "static/css/app/[locale]/layout.css",
       "static/chunks/app/[locale]/layout.js"
     ],
     "/[locale]/not-found": [
@@ -16,10 +16,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/[locale]/not-found.js"
     ],
-    "/[locale]/page": [
+    "/[locale]/membresias/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/[locale]/page.js"
+      "static/chunks/app/[locale]/membresias/page.js"
     ]
   }
 }

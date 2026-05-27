@@ -32,9 +32,9 @@ export default function Header() {
         { label: t('senderismo'), href: '/hiking' },
       ],
     },
-    { label: t('calendario'), href: '/calendar' },
-    { label: t('eventos'), href: '/events' },
-    { label: t('membresias'), href: '/memberships' },
+    { label: t('calendario'), href: '/calendario' },
+    { label: t('eventos'), href: '/eventos' },
+    { label: t('membresias'), href: '/membresias' },
   ]
 
   useEffect(() => {

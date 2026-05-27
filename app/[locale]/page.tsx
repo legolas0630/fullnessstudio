@@ -258,7 +258,7 @@ function YogaSection() {
             </ul>
             <div className="flex flex-wrap gap-4">
               <Link href="/experiencias" className="inline-flex items-center justify-center bg-[#E5C158] text-black px-8 py-3.5 text-xs uppercase tracking-widest font-semibold hover:bg-[#F3D782] active:scale-95 transition-all">{t('btnHorario')}</Link>
-              <Link href="/memberships" className="inline-flex items-center justify-center border border-white/20 text-white px-8 py-3.5 text-xs uppercase tracking-widest font-light hover:bg-white/5 active:scale-95 transition-all">{t('btnMembresias')}</Link>
+              <Link href="/membresias" className="inline-flex items-center justify-center border border-white/20 text-white px-8 py-3.5 text-xs uppercase tracking-widest font-light hover:bg-white/5 active:scale-95 transition-all">{t('btnMembresias')}</Link>
             </div>
           </div>
 
@@ -561,7 +561,7 @@ function MembershipCTA() {
           <p className="font-body font-light text-white/60 text-base md:text-lg max-w-xl mx-auto mb-10 leading-relaxed">{t('descripcion')}</p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center w-full max-w-md">
-            <Link href="/memberships" className="inline-flex items-center justify-center bg-[#E5C158] text-black px-8 py-4 text-xs uppercase tracking-widest font-semibold hover:bg-[#F3D782] active:scale-95 transition-all w-full shadow-lg">
+            <Link href="/membresias" className="inline-flex items-center justify-center bg-[#E5C158] text-black px-8 py-4 text-xs uppercase tracking-widest font-semibold hover:bg-[#F3D782] active:scale-95 transition-all w-full shadow-lg">
               {t('btn1')}
             </Link>
             <Link href="/auth/register" className="inline-flex items-center justify-center border border-white/20 text-white px-8 py-4 text-xs uppercase tracking-widest font-light hover:bg-white/5 active:scale-95 transition-all w-full">
