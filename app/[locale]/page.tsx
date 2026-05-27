@@ -518,7 +518,7 @@ function Schedule() {
                   {cls.spots} {t('lugares')}
                 </span>
                 <Link
-                  href="/calendar"
+                  href="/calendario"
                   className="text-xs tracking-widest uppercase text-[#E5C158] sm:opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 font-medium"
                 >
                   {t('reservar')} <ChevronRight size={14} />
