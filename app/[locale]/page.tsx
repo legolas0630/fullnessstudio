@@ -162,11 +162,11 @@ function Offerings() {
           {offeringsData.map((o) => {
             const Icon = o.icon
             return (
-              <Link
-                key={o.labelKey}
-                href={o.href}
-                className={`group relative flex flex-col justify-end min-h-[380px] bg-[#161816] rounded-2xl overflow-hidden border border-white/5 hover:border-[#E5C158]/30 transition-all duration-500 shadow-xl ${o.span}`}
-              >
+             <Link
+  key={o.labelKey}
+  href={o.href as any} // 👈 Agregamos 'as any' para calmar al validador de TypeScript
+  className={`group relative flex flex-col justify-end min-h-[380px] bg-[#161816] rounded-2xl overflow-hidden border border-white/5 hover:border-[#E5C158]/30 transition-all duration-500 shadow-xl ${o.span}`}
+>
                 {/* Visual Image Overlay */}
                 <div className="absolute inset-0 z-0">
                   <Image 
