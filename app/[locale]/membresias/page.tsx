@@ -89,7 +89,7 @@ const faqsData = [
 export default function MembershipsPage() {
   const [animate, setAnimate] = useState(false)
   const [activeFaq, setActiveFaq] = useState<number | null>(null)
-  const { currency, formatPrice } = useCurrency()
+  const { currency } = useCurrency()
 
   useEffect(() => {
     setAnimate(true)
@@ -120,7 +120,6 @@ export default function MembershipsPage() {
         <div className="max-w-[1600px] mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 items-stretch">
             {plansData.map((plan) => {
-              const currentPrice = currency === 'MXN' ? plan.priceMXN : plan.priceUSD;
               const annualLabel = currency === 'MXN' ? plan.annualMXN : plan.annualUSD;
 
               return (
@@ -151,11 +150,11 @@ export default function MembershipsPage() {
                     </p>
                   </div>
 
-                  {/* Desglose de precios dinámicos */}
+                  {/* Desglose de precios estáticos e inmunes a la doble conversión */}
                   <div className="mb-6 pb-6 border-b border-white/5">
                     <div className="flex items-baseline gap-1.5">
                       <span className={`font-display text-4xl font-light tracking-tight ${plan.highlight ? 'text-[#E5C158]' : 'text-white'}`}>
-                        {formatPrice(currentPrice)}
+                        {currency === 'MXN' ? `$${plan.priceMXN} MXN` : `$${plan.priceUSD} USD`}
                       </span>
                       <span className="text-xs font-light text-white/30">
                         /{plan.priceSub}

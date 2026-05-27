@@ -62,13 +62,10 @@ function Hero() {
           {t('subtitulo')}
         </p>
 
-        <div
-          className={`flex flex-col sm:flex-row gap-4 justify-center transition-all duration-1000 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
-          style={{ transitionDelay: '600ms' }}
-        >
+       <div className="flex flex-col sm:flex-row gap-4 justify-center transition-all duration-1000" style={{ transitionDelay: '600ms' }}>
           <Link
             href="/auth/register"
-            className="inline-flex items-center gap-2 bg-[#E5C158] text-black px-8 py-4 text-xs tracking-widest uppercase font-semibold hover:bg-[#F3D782] active:scale-95 transition-all shadow-[0_4px_20px_rgba(229,193,88,0.2)]"
+            className="inline-flex items-center gap-2 bg-[#E5C158] text-black px-8 py-4 text-xs tracking-widest uppercase font-semibold hover:bg-[#F3D782] active:scale-95 transition-all shadow-lg"
           >
             {t('btnComenzar')} <ArrowRight size={14} />
           </Link>
@@ -79,18 +76,18 @@ function Hero() {
             {t('btnClases')}
           </Link>
         </div>
-      </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none">
-        <span className="text-[9px] tracking-[0.3em] uppercase text-white/30 font-light">{t('explorar')}</span>
-        <div className="w-px h-12 bg-gradient-to-b from-white/20 to-transparent" />
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none">
+          <span className="text-[9px] tracking-[0.3em] uppercase text-white/30 font-light">{t('explorar')}</span>
+          <div className="w-px h-12 bg-gradient-to-b from-white/20 to-transparent" />
+        </div>
       </div>
     </section>
   )
 }
 
-// --- INTRO / PHILOSOPHY BENTO -----------------------------------------------
+ // --- INTRO / PHILOSOPHY BENTO -----------------------------------------------
 function Intro() {
   const t = useTranslations('Intro')
   return (

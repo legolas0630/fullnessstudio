@@ -1,202 +1,147 @@
 'use client'
 
-import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import { Link } from '@/i18n/routing'
+import { ArrowRight, Sparkles, Heart, Activity, Waves, Flame, Compass } from 'lucide-react'
 import { useTranslations } from 'next-intl'
-import { useCurrency } from '@/context/CurrencyContext'
-import { Clock, Users, ChevronRight, Award, CheckCircle2, ShieldCheck } from 'lucide-react'
 
-const classesData = [
+const experiencesList = [
   {
-    nameKey: 'hathaName',
-    descKey: 'hathaDesc',
-    duration: '75 min',
-    levelKey: 'lvlTodos',
-    maxStudents: 20,
-    baseUsdDropIn: 25,
-    baseUsdMember: 18,
-    schedule: ['Lun 9:30', 'Mié 7:00', 'Vie 9:00', 'Sáb 10:00'],
-    img: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80'
+    id: 'yoga',
+    name: 'Yoga Somático & Hatha',
+    tagline: 'Unión, presencia y fluidez consciente',
+    description: 'Prácticas diseñadas para restaurar el flujo de energía vital. Desde la intensidad meditativa del Hatha tradicional hasta la suavidad integrativa del Yoga Restaurativo y Somático, creando un espacio para habitar el cuerpo en absoluta calma.',
+    href: '/experiencias/yoga',
+    icon: Heart,
+    accent: 'from-[#E5C158]/20 to-transparent',
+    details: ['Hatha Tradicional', 'Vinyasa Flow', 'Yoga Somático & Nidra'],
   },
   {
-    nameKey: 'vinyasaName',
-    descKey: 'vinyasaDesc',
-    duration: '60 min',
-    levelKey: 'lvlInter',
-    maxStudents: 18,
-    baseUsdDropIn: 25,
-    baseUsdMember: 18,
-    schedule: ['Lun 7:00', 'Mar 18:00', 'Jue 7:00', 'Sáb 8:00'],
-    img: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80'
+    id: 'pilates',
+    name: 'Pilates de Alta Precisión',
+    tagline: 'Fuerza interna, control y alineación simétrica',
+    description: 'Desarrolla una estructura corporal inteligente. Enfocado en la activación profunda del core, la descompresión de la columna y el control muscular milimétrico para moverte con gracia, potencia y total libertad en tu día a día.',
+    href: '/pilates',
+    icon: Activity,
+    accent: 'from-blue-500/10 to-transparent',
+    details: ['Control de Core', 'Alineación Postural', 'Flexibilidad Funcional'],
   },
   {
-    nameKey: 'yinName',
-    descKey: 'yinDesc',
-    duration: '75 min',
-    levelKey: 'lvlTodos',
-    maxStudents: 20,
-    baseUsdDropIn: 25,
-    baseUsdMember: 18,
-    schedule: ['Mar 19:30', 'Jue 19:00', 'Dom 16:00'],
-    img: 'https://images.unsplash.com/photo-1510894347580-fc4d0ff4e39b?auto=format&fit=crop&w=800&q=80'
+    id: 'sonoterapia',
+    name: 'Sonoterapia & Baños de Sonido',
+    tagline: 'Alineación vibracional y descanso celular',
+    description: 'Sincroniza tus ondas cerebrales con frecuencias de sanación profunda. A través de cuencos de cristal de cuarzo, gongs planetarios e instrumentos ancestrales, disolvemos bloqueos de estrés acumulado para recalibrar tu sistema nervioso.',
+    href: '/sonoterapia',
+    icon: Waves,
+    accent: 'from-purple-500/10 to-transparent',
+    details: ['Cuencos de Cuarzo', 'Gongs Planetarios', 'Armonización Energética'],
   },
   {
-    nameKey: 'restorativeName',
-    descKey: 'restorativeDesc',
-    duration: '75 min',
-    levelKey: 'lvlTodos',
-    maxStudents: 16,
-    baseUsdDropIn: 25,
-    baseUsdMember: 18,
-    schedule: ['Mié 19:30', 'Dom 10:00'],
-    img: 'https://images.unsplash.com/photo-1573599222222-38d5d5d5d5d5?auto=format&fit=crop&w=800&q=80'
+    id: 'ceremonia-cacao',
+    name: 'Ceremonias de Cacao Sagrado',
+    tagline: 'Rituales de apertura, reconexión y medicina del corazón',
+    description: 'Espacios circulares de alquimia comunitaria. Honramos el uso ancestral del cacao puro de grado ceremonial como un puente tierno para profundizar en la introspección, la meditación, la expresión auténtica y la música medicina.',
+    href: '/ceremonia-cacao',
+    icon: Flame,
+    accent: 'from-rose-500/10 to-transparent',
+    details: ['Rituales de Luna', 'Círculos de Palabra', 'Música Medicina'],
   },
   {
-    nameKey: 'nidraName',
-    descKey: 'nidraDesc',
-    duration: '60 min',
-    levelKey: 'lvlTodos',
-    maxStudents: 20,
-    baseUsdDropIn: 20,
-    baseUsdMember: 15,
-    schedule: ['Vie 19:30', 'Dom 18:00'],
-    img: 'https://images.unsplash.com/photo-1603233015219-c187b79dccd7?auto=format&fit=crop&w=800&q=80'
-  }
+    id: 'senderismo',
+    name: 'Senderismo Consciente',
+    tagline: 'Meditación en movimiento y ecología interna',
+    description: 'Caminatas silenciosas y guiadas por los senderos y cumbres místicas de Guanajuato. Diseñadas para reconectar con los ciclos de la naturaleza a través del enraizamiento físico, pranayama al aire libre y contemplación activa.',
+    href: '/senderismo',
+    icon: Compass,
+    accent: 'from-emerald-500/10 to-transparent',
+    details: ['Baños de Bosque (Shinrin-yoku)', 'Meditación de Cumbre', 'Enraizamiento'],
+  },
 ]
 
-export default function ExperienciasPage() {
-  const t = useTranslations('Experiencias')
-  const { formatPrice } = useCurrency()
+export default function ExperiencesHubPage() {
+  const [animate, setAnimate] = useState(false)
+  const t = useTranslations('Header') // Reutilizamos el contexto bilingüe
+
+  useEffect(() => {
+    setAnimate(true)
+  }, [])
 
   return (
-    <div className="w-full bg-[#0F100F] min-h-screen text-white select-none">
+    <div className="bg-[#0F100F] min-h-screen text-white/80 font-light selection:bg-[#E5C158]/30 selection:text-[#E5C158]">
       
-      {/* Premium Hero Section with Pulsating Sound Waves */}
-      <section className="relative pt-36 pb-20 overflow-hidden bg-gradient-to-b from-[#121412] to-[#0F100F] border-b border-white/5">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] pointer-events-none mix-blend-screen opacity-30 z-0">
-          <div className="absolute inset-0 rounded-full border border-[#E5C158]/20 animate-aura-wave" style={{ animationDelay: '0s' }} />
-          <div className="absolute w-[70%] h-[70%] top-[15%] left-[15%] rounded-full border border-[#E5C158]/30 animate-aura-wave" style={{ animationDelay: '2.5s' }} />
-        </div>
-
-        <div className="relative z-10 max-w-5xl mx-auto px-6 text-center flex flex-col items-center">
-          <p className="text-[10px] tracking-[0.3em] uppercase text-[#E5C158] font-light mb-4">{t('heroTag')}</p>
-          <h1 className="font-display text-5xl md:text-7xl text-white font-light mb-6 tracking-wide">{t('heroTitulo')}</h1>
-          <p className="font-body font-light text-white/60 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-            {t('heroSubtitulo')}
+      {/* --- HERO DE LUJO --- */}
+      <section className="relative pt-40 pb-24 overflow-hidden border-b border-white/5">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-[#E5C158]/10 blur-[130px] rounded-full pointer-events-none" />
+        
+        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <Sparkles size={14} className="text-[#E5C158] animate-pulse" />
+            <p className="text-[10px] tracking-[0.3em] uppercase text-[#E5C158] font-medium">Nuestros Pilares</p>
+          </div>
+          <h1 className={`font-display text-5xl md:text-7xl font-light text-white leading-tight mb-6 transition-all duration-1000 transform ${animate ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            Espacios de <br /><em className="italic text-[#E5C158] font-serif not-italic">Transformación</em>
+          </h1>
+          <p className="font-body text-white/50 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
+            Explora nuestras disciplinas sagradas y terapéuticas. Cada una ha sido estructurada como un portal exclusivo para cultivar balance integral, silencio mental y maestría corporal en Fullness Studio.
           </p>
         </div>
       </section>
 
-      {/* Classes Bento Grid / Elegant Card Layout */}
-      <section className="py-24 bg-[#0F100F] px-6">
-        <div className="max-w-5xl mx-auto">
-          <div className="space-y-16">
-            {classesData.map((cls, i) => (
+      {/* --- RECORRIDO DE DISCIPLINAS PREMIUM --- */}
+      <section className="py-24 relative z-10">
+        <div className="max-w-5xl mx-auto px-6 space-y-16">
+          {experiencesList.map((exp, index) => {
+            const IconComponent = exp.icon
+            return (
               <div 
-                key={cls.nameKey} 
-                className={`grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch pb-16 ${
-                  i < classesData.length - 1 ? 'border-b border-white/5' : ''
-                }`}
+                key={exp.id}
+                className="group relative bg-[#161816]/40 backdrop-blur-md border border-white/5 hover:border-[#E5C158]/20 rounded-2xl p-8 md:p-10 transition-all duration-500 shadow-2xl overflow-hidden flex flex-col md:flex-row gap-8 items-start md:items-center"
               >
-                {/* Media left block with elegant frames */}
-                <div className="lg:col-span-4 relative min-h-[260px] rounded-2xl overflow-hidden border border-white/5 shadow-2xl group">
-                  <Image 
-                    src={cls.img}
-                    alt={cls.nameKey}
-                    fill
-                    className="object-cover brightness-75 contrast-105 group-hover:scale-105 transition-transform duration-700 mix-blend-luminosity group-hover:mix-blend-normal"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                {/* Iluminación trasera de acento dinámico en Hover */}
+                <div className={`absolute -inset-px bg-gradient-to-br ${exp.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none`} />
+
+                {/* Contenedor del Icono */}
+                <div className="w-14 h-14 rounded-xl border border-white/10 bg-black/40 flex items-center justify-center text-white/60 group-hover:text-[#E5C158] group-hover:border-[#E5C158]/40 shadow-inner shrink-0 transition-all duration-500 transform group-hover:scale-105">
+                  <IconComponent size={24} strokeWidth={1.2} />
                 </div>
 
-                {/* Center Core Descriptive Content Panel */}
-                <div className="lg:col-span-5 flex flex-col justify-center text-left">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="text-[10px] tracking-widest uppercase text-[#E5C158] font-medium bg-[#E5C158]/5 px-2.5 py-1 border border-[#E5C158]/10 rounded-sm">Yoga</span>
-                    <div className="w-1.5 h-1.5 rounded-full bg-white/20" />
-                    <span className="text-[10px] tracking-widest uppercase text-white/40 font-light">{t(cls.levelKey)}</span>
+                {/* Textos y Cuerpo Informativo */}
+                <div className="flex-1 relative z-10 text-left">
+                  <div className="mb-3">
+                    <h2 className="font-display text-2xl md:text-3xl text-white font-light group-hover:text-[#E5C158] transition-colors duration-300">
+                      {exp.name}
+                    </h2>
+                    <p className="text-xs text-[#E5C158]/80 font-medium tracking-wide mt-0.5">
+                      {exp.tagline}
+                    </p>
                   </div>
                   
-                  <h2 className="font-display text-3xl text-white font-light mb-4 tracking-wide group-hover:text-[#E5C158] transition-colors">{t(cls.nameKey)}</h2>
-                  <p className="font-body font-light text-white/60 text-sm leading-relaxed mb-6">{t(cls.descKey)}</p>
-                  
-                  <div className="flex gap-5 text-xs text-white/40 font-light">
-                    <span className="flex items-center gap-2"><Clock size={13} className="text-[#E5C158]/70" /> {cls.duration}</span>
-                    <span className="flex items-center gap-2"><Users size={13} className="text-[#E5C158]/70" /> Max {cls.maxStudents} {t('alumnos')}</span>
+                  <p className="text-sm font-light text-white/50 leading-relaxed mb-5 max-w-3xl">
+                    {exp.description}
+                  </p>
+
+                  {/* Micro-etiquetas de especialidades */}
+                  <div className="flex flex-wrap gap-2 mb-2">
+                    {exp.details.map((detail) => (
+                      <span key={detail} className="text-[10px] tracking-wide px-2.5 py-1 bg-white/5 border border-white/5 rounded-md text-white/40">
+                        {detail}
+                      </span>
+                    ))}
                   </div>
                 </div>
 
-                {/* Right Interactive Schedule & Pricing Summary Card */}
-                <div className="lg:col-span-3 flex flex-col justify-between bg-[#161816] border border-white/5 p-6 rounded-2xl shadow-xl text-left hover:border-[#E5C158]/20 transition-colors duration-300">
-                  <div>
-                    <p className="text-[9px] tracking-widest uppercase text-white/30 font-medium mb-3">{t('labelPrecios')}</p>
-                    <div className="grid grid-cols-2 gap-4 border-b border-white/5 pb-4 mb-4">
-                      <div>
-                        <p className="font-display text-xl text-white font-light">{formatPrice(cls.baseUsdDropIn)}</p>
-                        <p className="text-[10px] text-white/40 font-light mt-0.5">{t('claseSuelta')}</p>
-                      </div>
-                      <div>
-                        <p className="font-display text-xl text-[#E5C158] font-medium">{formatPrice(cls.baseUsdMember)}</p>
-                        <p className="text-[10px] text-[#E5C158]/60 font-light mt-0.5">{t('labelMiembros')}</p>
-                      </div>
-                    </div>
-
-                    <p className="text-[9px] tracking-widest uppercase text-white/30 font-medium mb-2.5">{t('labelHorarios')}</p>
-                    <div className="flex flex-wrap gap-1.5 mb-6">
-                      {cls.schedule.map((s) => (
-                        <span key={s} className="text-[10px] px-2.5 py-1 bg-black/40 border border-white/5 text-white/70 font-light rounded-sm tracking-wider">
-                          {s}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <Link href="/calendario" className="inline-flex items-center gap-2 text-xs tracking-widest uppercase text-[#E5C158] font-medium group/btn active:translate-x-1 transition-transform">
-                    {t('btnReserva')} <ChevronRight size={14} className="transition-transform group-hover/btn:translate-x-0.5" />
+                {/* Botón de Entrada de Enlace Seguro */}
+                <div className="w-full md:w-auto shrink-0 relative z-10 border-t md:border-t-0 border-white/5 pt-4 md:pt-0">
+                  <Link
+                    href={exp.href as any}
+                    className="w-full md:w-auto inline-flex items-center justify-center gap-2 text-xs tracking-widest uppercase px-6 py-3.5 border border-[#E5C158]/30 text-[#E5C158] hover:bg-[#E5C158] hover:text-black transition-all duration-300 rounded-sm font-medium active:scale-95 transform shadow-md"
+                  >
+                    Explorar <ArrowRight size={13} />
                   </Link>
                 </div>
-
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Exclusive Master Guide Profile - Katya Section */}
-      <section className="py-24 bg-[#121412] px-6 border-t border-white/5">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <p className="text-[10px] tracking-[0.3em] uppercase text-[#E5C158] font-light mb-3">{t('guideTag')}</p>
-            <h2 className="font-display text-4xl md:text-5xl text-white font-light">{t('guideTitulo')}</h2>
-          </div>
-          
-          <div className="bg-[#161816] border border-white/5 rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 md:gap-12 hover:border-[#E5C158]/10 transition-colors duration-500 shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-36 h-36 rounded-full bg-[#E5C158]/5 translate-x-1/3 -translate-y-1/3 pointer-events-none" />
-            
-            {/* Elegant avatar wrapper overlay */}
-            <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-[#E5C158] to-[#F3D782] flex items-center justify-center p-0.5 shrink-0 shadow-[0_0_20px_rgba(229,193,88,0.15)] animate-breathe">
-              <div className="w-full h-full rounded-full bg-[#161816] flex items-center justify-center">
-                <span className="font-display text-4xl text-[#E5C158] font-light">K</span>
-              </div>
-            </div>
-
-            <div className="text-left flex-1">
-              <h3 className="font-display text-2xl text-white font-light mb-1">Katya</h3>
-              <p className="text-[10px] tracking-widest text-[#E5C158] uppercase font-medium mb-4 flex flex-wrap items-center gap-2">
-                <Award size={12} /> {t('guideEspecialidad')} • 10 {t('guideAnos')}
-              </p>
-              <p className="font-body font-light text-white/60 text-sm leading-relaxed max-w-xl">
-                {t('guideBio')}
-              </p>
-              
-              {/* Trust Badge Grid Metrics indicators */}
-              <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-white/5 text-[10px] tracking-wider uppercase font-light text-white/40">
-                <div className="flex items-center gap-1.5"><CheckCircle2 size={12} className="text-[#E5C158]" /> Hatha Flow</div>
-                <div className="flex items-center gap-1.5"><ShieldCheck size={12} className="text-[#E5C158]" /> Vinyasa</div>
-                <div className="flex items-center gap-1.5"><Award size={12} className="text-[#E5C158]" /> Meditation</div>
-              </div>
-            </div>
-          </div>
+            )
+          })}
         </div>
       </section>
 

@@ -20,6 +20,36 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/[locale]/membresias/page.js"
+    ],
+    "/[locale]/experiencias/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/[locale]/experiencias/page.js"
+    ],
+    "/[locale]/experiencias/yoga/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/[locale]/experiencias/yoga/page.js"
+    ],
+    "/[locale]/pilates/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/[locale]/pilates/page.js"
+    ],
+    "/[locale]/sonoterapia/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/[locale]/sonoterapia/page.js"
+    ],
+    "/[locale]/ceremonia-cacao/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/[locale]/ceremonia-cacao/page.js"
+    ],
+    "/[locale]/senderismo/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/[locale]/senderismo/page.js"
     ]
   }
 }
