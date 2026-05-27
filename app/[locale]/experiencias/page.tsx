@@ -151,7 +151,7 @@ export default function ExperienciasPage() {
                     </div>
                   </div>
 
-                  <Link href="/calendar" className="inline-flex items-center gap-2 text-xs tracking-widest uppercase text-[#E5C158] font-medium group/btn active:translate-x-1 transition-transform">
+                  <Link href="/calendario" className="inline-flex items-center gap-2 text-xs tracking-widest uppercase text-[#E5C158] font-medium group/btn active:translate-x-1 transition-transform">
                     {t('btnReserva')} <ChevronRight size={14} className="transition-transform group-hover/btn:translate-x-0.5" />
                   </Link>
                 </div>
