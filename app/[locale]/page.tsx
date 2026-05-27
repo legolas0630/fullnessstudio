@@ -73,7 +73,7 @@ function Hero() {
             {t('btnComenzar')} <ArrowRight size={14} />
           </Link>
           <Link
-            href="/calendar"
+            href="/calendario"
             className="inline-flex items-center gap-2 border border-white/20 text-white px-8 py-4 text-xs tracking-widest uppercase font-light hover:bg-white/5 active:scale-95 transition-all"
           >
             {t('btnClases')}
